@@ -13,3 +13,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Export directory
+Escalator/Export
+
+# Raw resources and prototype textures
+Escalator/Raw

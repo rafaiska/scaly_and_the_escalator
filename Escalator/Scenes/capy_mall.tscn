@@ -1,0 +1,196 @@
+[gd_scene load_steps=24 format=3 uid="uid://d07wyi8887sfd"]
+
+[ext_resource type="Texture2D" uid="uid://b7hbnl6dn24us" path="res://Assets/bg.png" id="1_wc8ml"]
+[ext_resource type="Texture2D" uid="uid://pjcp1hu4gyg" path="res://Assets/control_room1.png" id="2_be2kd"]
+[ext_resource type="Texture2D" uid="uid://l51to8m4e8jy" path="res://Assets/escalator1.png" id="2_xe6wq"]
+[ext_resource type="Texture2D" uid="uid://d36lklwxyxaew" path="res://Assets/escalator2.png" id="3_lw77j"]
+[ext_resource type="Texture2D" uid="uid://d1q2j0tj6ibql" path="res://Assets/control_room2.png" id="3_v303y"]
+[ext_resource type="Texture2D" uid="uid://bljik854cwpg4" path="res://Assets/control_room3.png" id="4_2ip06"]
+[ext_resource type="Texture2D" uid="uid://blkhnxysw68et" path="res://Assets/escalator3.png" id="4_3ggyr"]
+[ext_resource type="Texture2D" uid="uid://dq2dag7y0730l" path="res://Assets/throttle_bar.png" id="5_bn148"]
+[ext_resource type="Texture2D" uid="uid://dxpn2e2y80n5i" path="res://Assets/escalator4.png" id="5_k76om"]
+[ext_resource type="Texture2D" uid="uid://d26kvajo68o36" path="res://Assets/escalator5.png" id="6_dccf4"]
+[ext_resource type="Texture2D" uid="uid://cq71hxclio1ue" path="res://Assets/reverse.png" id="6_e8dwl"]
+[ext_resource type="Texture2D" uid="uid://d3tm1n8rik633" path="res://Assets/escalator6.png" id="7_u6rwg"]
+[ext_resource type="Texture2D" uid="uid://cny8f2gq71v1" path="res://Assets/escalator7.png" id="8_dnu7s"]
+[ext_resource type="Texture2D" uid="uid://dxchvnco1ac0m" path="res://Assets/escalator8.png" id="9_gxtil"]
+[ext_resource type="FontFile" uid="uid://ddxaxhlxaqymd" path="res://Assets/MunroSmall-wPZw.ttf" id="15_qwmx2"]
+[ext_resource type="Texture2D" uid="uid://dfqgbcmsfdfp0" path="res://Assets/mood_bar_frame.png" id="16_c5bpo"]
+[ext_resource type="Texture2D" uid="uid://bp5dilkkvya5u" path="res://Assets/mood_bar.png" id="17_h1wil"]
+[ext_resource type="Texture2D" uid="uid://diol8nij2tgfw" path="res://Assets/scaly1.png" id="18_cilgm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8r7w5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_be2kd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v303y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2ip06")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_aemty"]
+offsets = PackedFloat32Array(0, 0.96129, 0.980645, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.672793, 0.672793, 0.672793, 1, 0.780645, 0.780645, 0.780645, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_evjko"]
+gradient = SubResource("Gradient_aemty")
+width = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ufebi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_gxtil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dnu7s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_u6rwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dccf4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_k76om")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3ggyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lw77j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xe6wq")
+}],
+"loop": true,
+"name": &"down",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xe6wq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lw77j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3ggyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_k76om")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dccf4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_u6rwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dnu7s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gxtil")
+}],
+"loop": true,
+"name": &"up",
+"speed": 120.0
+}]
+
+[sub_resource type="Curve2D" id="Curve2D_0hthj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 340, 149, 0, 0, 0, 0, 254, 149, 0, 0, 0, 0, 155, 51, 0, 0, 0, 0, -13, 51)
+}
+point_count = 4
+
+[node name="CapyMall" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("1_wc8ml")
+
+[node name="ControlRoom" type="AnimatedSprite2D" parent="."]
+position = Vector2(46.5, 154.5)
+sprite_frames = SubResource("SpriteFrames_8r7w5")
+autoplay = "default"
+
+[node name="ThrottleDisplay" type="TextureProgressBar" parent="."]
+offset_left = 76.0
+offset_top = 136.0
+offset_right = 84.0
+offset_bottom = 148.0
+value = 50.0
+fill_mode = 3
+texture_progress = ExtResource("5_bn148")
+tint_progress = Color(1, 1, 0, 1)
+
+[node name="ReverseDisplay" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(18.5, 142.5)
+texture = ExtResource("6_e8dwl")
+
+[node name="CRoomGlass" type="Sprite2D" parent="."]
+modulate = Color(0.54902, 1, 1, 0.286275)
+position = Vector2(46.5, 154.5)
+scale = Vector2(83, -45)
+texture = SubResource("GradientTexture1D_evjko")
+
+[node name="Escalator" type="AnimatedSprite2D" parent="."]
+position = Vector2(208, 98)
+sprite_frames = SubResource("SpriteFrames_ufebi")
+animation = &"down"
+autoplay = "up"
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0hthj")
+
+[node name="GameOver" type="Panel" parent="."]
+visible = false
+texture_filter = 1
+offset_left = 89.0
+offset_top = 80.0
+offset_right = 268.0
+offset_bottom = 120.0
+
+[node name="GameOverLabel" type="RichTextLabel" parent="GameOver"]
+texture_filter = 1
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.5
+offset_top = -18.0
+offset_right = 62.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("15_qwmx2")
+theme_override_font_sizes/normal_font_size = 28
+text = "Game Over"
+scroll_active = false
+
+[node name="MoodBarFrame" type="Sprite2D" parent="."]
+position = Vector2(223, 166)
+texture = ExtResource("16_c5bpo")
+
+[node name="MoodBar" type="TextureProgressBar" parent="MoodBarFrame"]
+offset_left = -91.0
+offset_right = 91.0
+offset_bottom = 8.0
+value = 50.0
+texture_progress = ExtResource("17_h1wil")
+
+[node name="Scaly" type="Sprite2D" parent="."]
+position = Vector2(47, 154)
+texture = ExtResource("18_cilgm")
