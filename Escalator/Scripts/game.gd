@@ -33,6 +33,8 @@ var _escalator_speed : float
 var _passenger_pool : Array
 var _global_mood : float
 var _mood_bar : TextureProgressBar
+var _score_panel : ScorePanel
+var _total_score : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,7 +50,8 @@ func _ready():
 	_reverse_display_sprite = get_tree().get_current_scene().find_child("ReverseDisplay")
 	_game_over_panel = get_tree().get_current_scene().find_child("GameOver")
 	_mood_bar = get_tree().get_current_scene().find_child("MoodBarFrame").find_child("MoodBar")
-#	_spawn_passenger('R')
+	_score_panel = get_tree().get_current_scene().find_child("ScorePanel")
+	_total_score = 0
 
 func get_passengers_in_line(side) -> Array[PathFollow2D]:
 	assert(side in ['R', 'L'], 'Invalid parameter side')
@@ -141,6 +144,8 @@ func _update_escalator_sprite():
 
 func _on_passenger_exited_map(passenger: Passenger):
 	_global_mood += passenger._mood - 0.5
+	_total_score += int(passenger._mood * 10)
+	_score_panel.set_score(_total_score)
 	passenger.disable()
 	_passenger_pool.append(passenger)
 
