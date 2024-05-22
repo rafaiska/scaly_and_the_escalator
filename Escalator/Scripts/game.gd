@@ -38,12 +38,6 @@ var _total_score : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_spawn_rate = STARTING_PASSENGER_SPAWN_RATE
-	_spawn_timer = 1 / _spawn_rate
-	_escalator_speed = 0.0
-	_total_weight = ESCALATOR_WEIGHT
-	_throttle = 0.0
-	_global_mood = GLOBAL_MOOD_MAX / 2.0
 	_path = get_tree().get_current_scene().find_child("Path2D")
 	_escalator_sprite = get_tree().get_current_scene().find_child("Escalator")
 	_throttle_display_bar = get_tree().get_current_scene().find_child("ThrottleDisplay")
@@ -51,14 +45,19 @@ func _ready():
 	_game_over_panel = get_tree().get_current_scene().find_child("GameOver")
 	_mood_bar = get_tree().get_current_scene().find_child("MoodBarFrame").find_child("MoodBar")
 	_score_panel = get_tree().get_current_scene().find_child("ScorePanel")
-	_total_score = 0
+	_configure_level()
+
+func restart():
+	_clear_all_passengers()
+	_configure_level()
+	Engine.time_scale = 1
 
 func get_passengers_in_line(side) -> Array[PathFollow2D]:
 	assert(side in ['R', 'L'], 'Invalid parameter side')
 	var passengers = []
 	var line_start = 0.0 if side == 'L' else STAIRS_END + WAITING_LINE_DIST
 	var line_end = STAIRS_START - WAITING_LINE_DIST if side == 'L' else 1.0
-	for c in $Path2D.get_children():
+	for c in _path.get_children():
 		if line_start <= c.progress_ratio <= line_end:
 			passengers.append(c)
 	return passengers
@@ -82,7 +81,6 @@ func _process(delta):
 
 func escalator_speed():
 	return _escalator_speed
-	
 
 func _spawn_passenger(starting_side):
 	var new_passenger = _create_or_fetch_from_pool()
@@ -170,3 +168,17 @@ func _update_speed(delta):
 
 func _update_mood_bar():
 	_mood_bar.value = (_global_mood / GLOBAL_MOOD_MAX) * 100
+
+func _configure_level():
+	_spawn_rate = STARTING_PASSENGER_SPAWN_RATE
+	_spawn_timer = 1 / _spawn_rate
+	_escalator_speed = 0.0
+	_total_weight = ESCALATOR_WEIGHT
+	_throttle = 0.0
+	_global_mood = GLOBAL_MOOD_MAX / 2.0
+	_total_score = 0
+
+func _clear_all_passengers():
+	for p in _path.get_children():
+		p.queue_free()
+	_passenger_pool.clear()

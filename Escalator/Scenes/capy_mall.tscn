@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d07wyi8887sfd"]
+[gd_scene load_steps=26 format=3 uid="uid://d07wyi8887sfd"]
 
 [ext_resource type="Texture2D" uid="uid://b7hbnl6dn24us" path="res://Assets/bg.png" id="1_wc8ml"]
 [ext_resource type="Texture2D" uid="uid://pjcp1hu4gyg" path="res://Assets/control_room1.png" id="2_be2kd"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cny8f2gq71v1" path="res://Assets/escalator7.png" id="8_dnu7s"]
 [ext_resource type="Texture2D" uid="uid://dxchvnco1ac0m" path="res://Assets/escalator8.png" id="9_gxtil"]
 [ext_resource type="FontFile" uid="uid://ddxaxhlxaqymd" path="res://Assets/MunroSmall-wPZw.ttf" id="15_qwmx2"]
+[ext_resource type="Script" path="res://Scripts/game_over.gd" id="15_xojs3"]
 [ext_resource type="Texture2D" uid="uid://dfqgbcmsfdfp0" path="res://Assets/mood_bar_frame.png" id="16_c5bpo"]
 [ext_resource type="Texture2D" uid="uid://bp5dilkkvya5u" path="res://Assets/mood_bar.png" id="17_h1wil"]
 [ext_resource type="Texture2D" uid="uid://diol8nij2tgfw" path="res://Assets/scaly1.png" id="18_cilgm"]
@@ -154,32 +155,44 @@ autoplay = "up"
 curve = SubResource("Curve2D_0hthj")
 
 [node name="GameOver" type="Panel" parent="."]
-visible = false
 texture_filter = 1
 offset_left = 89.0
 offset_top = 80.0
 offset_right = 268.0
-offset_bottom = 120.0
+offset_bottom = 142.0
+script = ExtResource("15_xojs3")
 
 [node name="GameOverLabel" type="RichTextLabel" parent="GameOver"]
 texture_filter = 1
 clip_contents = false
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.5
-offset_top = -18.0
-offset_right = 62.5
-offset_bottom = 16.0
+offset_left = -61.5
+offset_right = 61.5
+offset_bottom = 34.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("15_qwmx2")
 theme_override_font_sizes/normal_font_size = 28
 text = "Game Over"
 scroll_active = false
+
+[node name="RestartButton" type="Button" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -28.5
+offset_top = -31.0
+offset_right = 28.5
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("15_qwmx2")
+text = "Restart"
 
 [node name="MoodBarFrame" type="Sprite2D" parent="."]
 position = Vector2(223, 166)
@@ -210,3 +223,5 @@ offset_bottom = 19.0
 theme_override_fonts/normal_font = ExtResource("15_qwmx2")
 theme_override_font_sizes/normal_font_size = 20
 text = "000000"
+
+[connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]
