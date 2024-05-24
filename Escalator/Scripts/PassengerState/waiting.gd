@@ -32,3 +32,6 @@ func _escalator_waiting_spot() -> float:
 
 func _can_board_escalator() -> bool:
 	return (passenger._direction == 1 and Game.escalator_speed() > 0) or (passenger._direction == -1 and Game.escalator_speed() < 0)
+
+func name():
+	return "Wait"

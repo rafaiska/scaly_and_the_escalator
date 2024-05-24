@@ -9,3 +9,6 @@ func state_process(delta):
 		passenger.exited_map.emit(passenger)
 		notified = true
 	return self
+
+func name():
+	return "Ended"

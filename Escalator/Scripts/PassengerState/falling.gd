@@ -45,3 +45,6 @@ func _get_destination():
 
 func rotate(rspeed: float):
 	_rotation_speed = rspeed * ROTATION_RATE
+
+func name():
+	return "Falling"

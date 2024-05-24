@@ -15,6 +15,7 @@ const GLOBAL_MOOD_MAX : float = 5
 const STARTING_PASSENGER_SPAWN_RATE : float = 0.2
 const PASSENGER_SPAWN_INCREASE_RATE : float = 0.001
 
+var _spawn_enabled : bool = true
 var _spawn_timer : float
 var _spawn_rate : float
 var _path : Path2D
@@ -82,7 +83,8 @@ func _process(delta):
 func escalator_speed():
 	return _escalator_speed
 
-func _spawn_passenger(starting_side):
+func _spawn_passenger():
+	var starting_side = 'L' if randi() % 2 == 1 else 'R'
 	var new_passenger = _create_or_fetch_from_pool()
 	
 	var passenger_before = _last_spawned_passenger_L if starting_side == 'L' else _last_spawned_passenger_R
@@ -109,8 +111,8 @@ func _handle_spawn(delta):
 	_spawn_timer -= delta
 	if _spawn_timer <= 0:
 		_spawn_timer = 1 / _spawn_rate
-		print(_spawn_timer)
-		_spawn_passenger('L' if randi() % 2 == 1 else 'R')
+		if _spawn_enabled:
+			_spawn_passenger()
 
 func _handle_input(delta):
 	if _key_pressed != "" and Input.is_action_just_released(_key_pressed):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://d07wyi8887sfd"]
+[gd_scene load_steps=28 format=3 uid="uid://d07wyi8887sfd"]
 
 [ext_resource type="Texture2D" uid="uid://b7hbnl6dn24us" path="res://Assets/bg.png" id="1_wc8ml"]
 [ext_resource type="Texture2D" uid="uid://pjcp1hu4gyg" path="res://Assets/control_room1.png" id="2_be2kd"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://bp5dilkkvya5u" path="res://Assets/mood_bar.png" id="17_h1wil"]
 [ext_resource type="Texture2D" uid="uid://diol8nij2tgfw" path="res://Assets/scaly1.png" id="18_cilgm"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="19_7oxoq"]
+[ext_resource type="Theme" uid="uid://btn6xpdob0t3d" path="res://Assets/sats_ui_theme.tres" id="21_qvp5b"]
+[ext_resource type="Script" path="res://Scripts/debug_passenger_control.gd" id="22_y0x2g"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r7w5"]
 animations = [{
@@ -230,28 +232,25 @@ offset_left = 234.0
 offset_top = 3.0
 offset_right = 318.0
 offset_bottom = 101.0
-theme_override_fonts/font = ExtResource("15_qwmx2")
-theme_override_font_sizes/font_size = 10
+theme = ExtResource("21_qvp5b")
 tab_alignment = 1
 
-[node name="Params" type="ScrollContainer" parent="DebugTabs"]
+[node name="pControl" type="ScrollContainer" parent="DebugTabs"]
+layout_mode = 2
+script = ExtResource("22_y0x2g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugTabs/pControl"]
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="DebugTabs/Params"]
+[node name="CheckBox" type="CheckBox" parent="DebugTabs/pControl/VBoxContainer"]
 layout_mode = 2
-columns = 2
+button_pressed = true
+text = "autospawn"
 
-[node name="AccelLabel" type="Label" parent="DebugTabs/Params/GridContainer"]
+[node name="Button" type="Button" parent="DebugTabs/pControl/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("15_qwmx2")
-theme_override_font_sizes/font_size = 10
-text = "Accel"
-
-[node name="AccelEdit" type="LineEdit" parent="DebugTabs/Params/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_fonts/font = ExtResource("15_qwmx2")
-theme_override_font_sizes/font_size = 10
+text = "spawn passenger"
 
 [connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]
+[connection signal="toggled" from="DebugTabs/pControl/VBoxContainer/CheckBox" to="DebugTabs/pControl" method="_on_check_box_toggled"]
+[connection signal="pressed" from="DebugTabs/pControl/VBoxContainer/Button" to="DebugTabs/pControl" method="_on_button_pressed"]

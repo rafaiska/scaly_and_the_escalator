@@ -14,7 +14,9 @@ var _passenger_in_front : PathFollow2D
 var _weight : float
 var speed : float
 var _mood : float
-var _state
+var _topple_accel : float = 8
+var _state : PassengerState
+var _state_name : String
 
 const SLIDE_ACCEL = -0.05
 const WALK_SPEED_ABS = 0.05
@@ -66,6 +68,9 @@ func start_walk_timer():
 func end_of_path():
 	return 1 if _direction == 1 else 0
 
+func get_topple_accel():
+	return _topple_accel
+
 func _configure(starting_side, weight, passenger_in_front):
 	assert(starting_side in ['R', 'L'], 'Invalid parameter starting_side')
 	
@@ -92,6 +97,7 @@ func _ready():
 	_move_delay.timeout.connect(self._on_move_delay_timeout)
 
 func _process(delta):
+	_state_name = _state.name()
 	_mood -= MOOD_DECAY_RATE * delta
 	_update_moodlet()
 	self._state = self._state.state_process(delta)

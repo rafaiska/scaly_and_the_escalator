@@ -2,8 +2,6 @@ extends PassengerState
 
 class_name PassengerStateRiding
 
-const TOPPLE_ACCEL = 8
-
 func state_process(delta):
 	_fix_position()
 	
@@ -42,4 +40,7 @@ func _fix_position():
 		assert(false, 'Wrong direction')
 
 func _passenger_toppled(previous_speed, delta) -> bool:
-	return (abs(passenger.speed - previous_speed) / delta) > TOPPLE_ACCEL
+	return (abs(passenger.speed - previous_speed) / delta) > passenger.get_topple_accel()
+
+func name():
+	return "Riding"

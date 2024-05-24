@@ -49,3 +49,6 @@ func _fix_destination():
 		destination = 1
 	elif destination < 0:
 		destination = 0
+
+func name():
+	return "Walk"
