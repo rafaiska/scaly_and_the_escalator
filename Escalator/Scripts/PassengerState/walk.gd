@@ -45,6 +45,7 @@ func _reached_destination() -> bool:
 	return passenger.is_in_position(destination)
 
 func _fix_destination():
+	assert(destination != null, 'Walk state without destination set')
 	if destination > 1:
 		destination = 1
 	elif destination < 0:

@@ -81,8 +81,11 @@ func _configure(starting_side, weight, passenger_in_front):
 	
 	self._weight = weight
 	self._passenger_in_front = passenger_in_front
-	if _passenger_in_front != null:
-		_passenger_in_front.exited_map.connect(self._on_passenger_in_front_exited)
+	if passenger_in_front != null and passenger_in_front != self:
+		passenger_in_front.exited_map.connect(self._on_passenger_in_front_exited)
+		self._passenger_in_front = passenger_in_front
+	else:
+		self._passenger_in_front = null
 	
 	_direction = 1 if starting_side == 'R' else -1
 	progress_ratio = 0 if starting_side == 'R' else 1
@@ -111,7 +114,6 @@ func _on_move_delay_timeout():
 		self._state.can_walk(true)
 
 func _on_passenger_in_front_exited(passenger: Passenger):
-#	assert(passenger == _passenger_in_front)
 	passenger.exited_stairs.disconnect(_on_passenger_in_front_exited)
 	_passenger_in_front = null
 
