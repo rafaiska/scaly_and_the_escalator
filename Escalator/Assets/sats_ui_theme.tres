@@ -1,7 +1,19 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://btn6xpdob0t3d"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://btn6xpdob0t3d"]
 
+[ext_resource type="StyleBox" uid="uid://7be7v3ufxt04" path="res://Resources/sats_style_box_flat.tres" id="1_ippie"]
 [ext_resource type="FontFile" uid="uid://ddxaxhlxaqymd" path="res://Assets/MunroSmall-wPZw.ttf" id="1_r2n1w"]
+[ext_resource type="StyleBox" uid="uid://bslebwcmgmuic" path="res://Resources/sats_button_box.tres" id="1_um4n7"]
+[ext_resource type="Texture2D" uid="uid://lqwufvhfrjle" path="res://Assets/cbox_c.png" id="2_o8eik"]
+[ext_resource type="Texture2D" uid="uid://cu0jjlagisv50" path="res://Assets/cbox_n.png" id="3_uwjqk"]
 
 [resource]
 default_font = ExtResource("1_r2n1w")
 default_font_size = 10
+Button/constants/h_separation = 1
+Button/styles/normal = ExtResource("1_um4n7")
+CheckBox/constants/check_v_offset = 6
+CheckBox/constants/h_separation = -12
+CheckBox/icons/checked = ExtResource("2_o8eik")
+CheckBox/icons/unchecked = ExtResource("3_uwjqk")
+Panel/styles/panel = ExtResource("1_ippie")
+TabContainer/styles/panel = ExtResource("1_ippie")

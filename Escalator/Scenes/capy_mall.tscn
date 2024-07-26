@@ -251,6 +251,14 @@ text = "autospawn"
 layout_mode = 2
 text = "spawn passenger"
 
+[node name="Vars" type="ScrollContainer" parent="DebugTabs"]
+visible = false
+layout_mode = 2
+
+[node name="Speed" type="Label" parent="DebugTabs/Vars"]
+layout_mode = 2
+text = "Speed: 1"
+
 [connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]
 [connection signal="toggled" from="DebugTabs/pControl/VBoxContainer/CheckBox" to="DebugTabs/pControl" method="_on_check_box_toggled"]
 [connection signal="pressed" from="DebugTabs/pControl/VBoxContainer/Button" to="DebugTabs/pControl" method="_on_button_pressed"]
