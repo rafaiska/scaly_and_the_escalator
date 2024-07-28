@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d07wyi8887sfd"]
+[gd_scene load_steps=29 format=3 uid="uid://d07wyi8887sfd"]
 
 [ext_resource type="Texture2D" uid="uid://b7hbnl6dn24us" path="res://Assets/bg.png" id="1_wc8ml"]
 [ext_resource type="Texture2D" uid="uid://pjcp1hu4gyg" path="res://Assets/control_room1.png" id="2_be2kd"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://Scripts/score.gd" id="19_7oxoq"]
 [ext_resource type="Theme" uid="uid://btn6xpdob0t3d" path="res://Assets/sats_ui_theme.tres" id="21_qvp5b"]
 [ext_resource type="Script" path="res://Scripts/debug_passenger_control.gd" id="22_y0x2g"]
+[ext_resource type="Script" path="res://Scripts/debug_vars.gd" id="23_1l44d"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r7w5"]
 animations = [{
@@ -156,6 +157,41 @@ autoplay = "up"
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_0hthj")
 
+[node name="DebugTabs" type="TabContainer" parent="."]
+offset_left = 234.0
+offset_top = 3.0
+offset_right = 318.0
+offset_bottom = 101.0
+theme = ExtResource("21_qvp5b")
+tab_alignment = 1
+
+[node name="pControl" type="ScrollContainer" parent="DebugTabs"]
+layout_mode = 2
+script = ExtResource("22_y0x2g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugTabs/pControl"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CheckBox" type="CheckBox" parent="DebugTabs/pControl/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "autospawn"
+
+[node name="Button" type="Button" parent="DebugTabs/pControl/VBoxContainer"]
+layout_mode = 2
+text = "spawn passenger"
+
+[node name="Vars" type="ScrollContainer" parent="DebugTabs"]
+visible = false
+layout_mode = 2
+script = ExtResource("23_1l44d")
+
+[node name="Speed" type="Label" parent="DebugTabs/Vars"]
+layout_mode = 2
+text = "Speed: 1"
+
 [node name="GameOver" type="Panel" parent="."]
 visible = false
 texture_filter = 1
@@ -227,38 +263,6 @@ theme_override_fonts/normal_font = ExtResource("15_qwmx2")
 theme_override_font_sizes/normal_font_size = 20
 text = "000000"
 
-[node name="DebugTabs" type="TabContainer" parent="."]
-offset_left = 234.0
-offset_top = 3.0
-offset_right = 318.0
-offset_bottom = 101.0
-theme = ExtResource("21_qvp5b")
-tab_alignment = 1
-
-[node name="pControl" type="ScrollContainer" parent="DebugTabs"]
-layout_mode = 2
-script = ExtResource("22_y0x2g")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugTabs/pControl"]
-layout_mode = 2
-
-[node name="CheckBox" type="CheckBox" parent="DebugTabs/pControl/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "autospawn"
-
-[node name="Button" type="Button" parent="DebugTabs/pControl/VBoxContainer"]
-layout_mode = 2
-text = "spawn passenger"
-
-[node name="Vars" type="ScrollContainer" parent="DebugTabs"]
-visible = false
-layout_mode = 2
-
-[node name="Speed" type="Label" parent="DebugTabs/Vars"]
-layout_mode = 2
-text = "Speed: 1"
-
-[connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]
 [connection signal="toggled" from="DebugTabs/pControl/VBoxContainer/CheckBox" to="DebugTabs/pControl" method="_on_check_box_toggled"]
 [connection signal="pressed" from="DebugTabs/pControl/VBoxContainer/Button" to="DebugTabs/pControl" method="_on_button_pressed"]
+[connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]
