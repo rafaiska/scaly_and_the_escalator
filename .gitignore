@@ -19,3 +19,7 @@ Escalator/Export
 
 # Raw resources and prototype textures
 Escalator/Raw
+
+# Media assets
+*.png
+*.ogg

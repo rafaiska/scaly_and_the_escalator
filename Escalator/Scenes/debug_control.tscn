@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2rmb36lufsn8"]
+
+[ext_resource type="Theme" uid="uid://btn6xpdob0t3d" path="res://Assets/sats_ui_theme.tres" id="1_am335"]
+[ext_resource type="Script" path="res://Scripts/debug_passenger_control.gd" id="2_07s32"]
+[ext_resource type="Script" path="res://Scripts/debug_vars.gd" id="3_dfpv3"]
+
+[node name="DebugTabs" type="TabContainer"]
+offset_left = 234.0
+offset_top = 3.0
+offset_right = 318.0
+offset_bottom = 101.0
+theme = ExtResource("1_am335")
+tab_alignment = 1
+
+[node name="pControl" type="ScrollContainer" parent="."]
+visible = false
+layout_mode = 2
+script = ExtResource("2_07s32")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pControl"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CheckBox" type="CheckBox" parent="pControl/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "autospawn"
+
+[node name="Button" type="Button" parent="pControl/VBoxContainer"]
+layout_mode = 2
+text = "spawn passenger"
+
+[node name="Vars" type="ScrollContainer" parent="."]
+visible = false
+layout_mode = 2
+script = ExtResource("3_dfpv3")
+
+[node name="Speed" type="Label" parent="Vars"]
+layout_mode = 2
+text = "Speed: 1"
+
+[connection signal="toggled" from="pControl/VBoxContainer/CheckBox" to="pControl" method="_on_check_box_toggled"]
+[connection signal="pressed" from="pControl/VBoxContainer/Button" to="pControl" method="_on_button_pressed"]

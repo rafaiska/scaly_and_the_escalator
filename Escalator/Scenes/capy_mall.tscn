@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d07wyi8887sfd"]
+[gd_scene load_steps=32 format=3 uid="uid://d07wyi8887sfd"]
 
 [ext_resource type="Texture2D" uid="uid://b7hbnl6dn24us" path="res://Assets/bg.png" id="1_wc8ml"]
 [ext_resource type="Texture2D" uid="uid://pjcp1hu4gyg" path="res://Assets/control_room1.png" id="2_be2kd"]
@@ -14,15 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://d3tm1n8rik633" path="res://Assets/escalator6.png" id="7_u6rwg"]
 [ext_resource type="Texture2D" uid="uid://cny8f2gq71v1" path="res://Assets/escalator7.png" id="8_dnu7s"]
 [ext_resource type="Texture2D" uid="uid://dxchvnco1ac0m" path="res://Assets/escalator8.png" id="9_gxtil"]
+[ext_resource type="Texture2D" uid="uid://ddi4hmh0tmhck" path="res://Assets/escalator_rail.png" id="15_l8xrx"]
 [ext_resource type="FontFile" uid="uid://ddxaxhlxaqymd" path="res://Assets/MunroSmall-wPZw.ttf" id="15_qwmx2"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="15_xojs3"]
-[ext_resource type="Texture2D" uid="uid://dfqgbcmsfdfp0" path="res://Assets/mood_bar_frame.png" id="16_c5bpo"]
-[ext_resource type="Texture2D" uid="uid://bp5dilkkvya5u" path="res://Assets/mood_bar.png" id="17_h1wil"]
 [ext_resource type="Texture2D" uid="uid://diol8nij2tgfw" path="res://Assets/scaly1.png" id="18_cilgm"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="19_7oxoq"]
-[ext_resource type="Theme" uid="uid://btn6xpdob0t3d" path="res://Assets/sats_ui_theme.tres" id="21_qvp5b"]
-[ext_resource type="Script" path="res://Scripts/debug_passenger_control.gd" id="22_y0x2g"]
-[ext_resource type="Script" path="res://Scripts/debug_vars.gd" id="23_1l44d"]
+[ext_resource type="Script" path="res://Scripts/chronogram.gd" id="23_2lm45"]
+[ext_resource type="Script" path="res://Scripts/passenger_spawner.gd" id="24_cymmw"]
+[ext_resource type="AudioStream" uid="uid://b7qusjesxhcgk" path="res://Assets/sfx/crash.ogg" id="24_te03t"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r7w5"]
 animations = [{
@@ -116,7 +115,58 @@ _data = {
 }
 point_count = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q3aas"]
+bg_color = Color(0.792157, 0.607843, 0.92549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.376471, 0.235294, 0.862745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8v7h"]
+bg_color = Color(0.376471, 0.235294, 0.862745, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4502"]
+bg_color = Color(0.482353, 0.482353, 0.482353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hfn3"]
+bg_color = Color(0.376471, 0.235294, 0.862745, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
 [node name="CapyMall" type="Node2D"]
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("escalator_path", "spawn_chronogram")]
+script = ExtResource("24_cymmw")
+escalator_path = NodePath("../Path2D")
+spawn_chronogram = NodePath("../Chronogram")
+
+[node name="Chronogram" type="Node" parent="." node_paths=PackedStringArray("clock_text")]
+script = ExtResource("23_2lm45")
+stage_length = 120.0
+clock_text = NodePath("../Clock/ClockText")
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(160, 90)
@@ -157,40 +207,29 @@ autoplay = "up"
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_0hthj")
 
-[node name="DebugTabs" type="TabContainer" parent="."]
-offset_left = 234.0
-offset_top = 3.0
-offset_right = 318.0
-offset_bottom = 101.0
-theme = ExtResource("21_qvp5b")
-tab_alignment = 1
+[node name="LWaitingSpot" type="PathFollow2D" parent="Path2D"]
+position = Vector2(116.122, 51)
+rotation = 3.14159
+progress = 264.181
 
-[node name="pControl" type="ScrollContainer" parent="DebugTabs"]
-layout_mode = 2
-script = ExtResource("22_y0x2g")
+[node name="RWaitingSpot" type="PathFollow2D" parent="Path2D"]
+position = Vector2(293.942, 149)
+rotation = 3.14159
+progress = 46.0556
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugTabs/pControl"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="LEscalatorStart" type="PathFollow2D" parent="Path2D"]
+position = Vector2(142.908, 51)
+rotation = 3.14159
+progress = 237.397
 
-[node name="CheckBox" type="CheckBox" parent="DebugTabs/pControl/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "autospawn"
+[node name="REscalatorStart" type="PathFollow2D" parent="Path2D"]
+position = Vector2(269.098, 149)
+rotation = 3.14159
+progress = 70.873
 
-[node name="Button" type="Button" parent="DebugTabs/pControl/VBoxContainer"]
-layout_mode = 2
-text = "spawn passenger"
-
-[node name="Vars" type="ScrollContainer" parent="DebugTabs"]
-visible = false
-layout_mode = 2
-script = ExtResource("23_1l44d")
-
-[node name="Speed" type="Label" parent="DebugTabs/Vars"]
-layout_mode = 2
-text = "Speed: 1"
+[node name="EscalatorRail" type="Sprite2D" parent="."]
+position = Vector2(200, 107.5)
+texture = ExtResource("15_l8xrx")
 
 [node name="GameOver" type="Panel" parent="."]
 visible = false
@@ -199,6 +238,7 @@ offset_left = 89.0
 offset_top = 80.0
 offset_right = 268.0
 offset_bottom = 142.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_q3aas")
 script = ExtResource("15_xojs3")
 
 [node name="GameOverLabel" type="RichTextLabel" parent="GameOver"]
@@ -208,12 +248,13 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -61.5
-offset_right = 61.5
-offset_bottom = 34.0
+offset_left = -64.5
+offset_top = -2.0
+offset_right = 68.5
+offset_bottom = 32.0
 grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("15_qwmx2")
-theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/normal_font_size = 30
 text = "Game Over"
 scroll_active = false
 
@@ -224,36 +265,34 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -28.5
+offset_left = -36.5
 offset_top = -31.0
-offset_right = 28.5
+offset_right = 33.5
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("15_qwmx2")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_n8v7h")
 text = "Restart"
-
-[node name="MoodBarFrame" type="Sprite2D" parent="."]
-position = Vector2(223, 166)
-texture = ExtResource("16_c5bpo")
-
-[node name="MoodBar" type="TextureProgressBar" parent="MoodBarFrame"]
-offset_left = -91.0
-offset_right = 91.0
-offset_bottom = 8.0
-value = 50.0
-texture_progress = ExtResource("17_h1wil")
 
 [node name="Scaly" type="Sprite2D" parent="."]
 position = Vector2(47, 154)
 texture = ExtResource("18_cilgm")
 
-[node name="ScorePanel" type="Panel" parent="."]
-offset_right = 75.0
-offset_bottom = 18.0
+[node name="Score" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("19_7oxoq")
 
-[node name="ScoreText" type="RichTextLabel" parent="ScorePanel"]
+[node name="ScorePanel" type="Panel" parent="Score"]
+offset_right = 75.0
+offset_bottom = 18.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d4502")
+
+[node name="ScoreText" type="RichTextLabel" parent="Score/ScorePanel"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = -5.0
@@ -263,6 +302,31 @@ theme_override_fonts/normal_font = ExtResource("15_qwmx2")
 theme_override_font_sizes/normal_font_size = 20
 text = "000000"
 
-[connection signal="toggled" from="DebugTabs/pControl/VBoxContainer/CheckBox" to="DebugTabs/pControl" method="_on_check_box_toggled"]
-[connection signal="pressed" from="DebugTabs/pControl/VBoxContainer/Button" to="DebugTabs/pControl" method="_on_button_pressed"]
+[node name="Crash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_te03t")
+
+[node name="Clock" type="Panel" parent="."]
+offset_left = 145.0
+offset_top = 160.0
+offset_right = 193.0
+offset_bottom = 178.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7hfn3")
+
+[node name="ClockText" type="RichTextLabel" parent="Clock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -13.0
+offset_right = 31.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("15_qwmx2")
+theme_override_font_sizes/normal_font_size = 20
+text = "10:00"
+
 [connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="_on_restart_button_pressed"]

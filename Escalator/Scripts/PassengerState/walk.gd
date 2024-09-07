@@ -5,17 +5,18 @@ class_name PassengerStateWalking
 var _can_walk : bool
 var destination : float
 
-func state_process(delta):
+func state_process(_delta):
 	_fix_destination()
 	var current_direction = sign(destination - passenger.progress_ratio)
-	passenger.speed = current_direction * passenger.WALK_SPEED_ABS if _can_walk else 0.0
+	passenger.speed = current_direction * passenger.walk_speed if _can_walk else 0.0
 
 	if _reached_destination():
-		passenger.speed = 0.0
-		passenger.progress_ratio = destination
 		if passenger.is_in_escalator():
 			return transition_ride()
-		elif passenger.progress_ratio == passenger.end_of_path():
+		
+		passenger.speed = 0.0
+		passenger.progress_ratio = destination
+		if passenger.progress_ratio == passenger.end_of_path():
 			return transition_end()
 		else:
 			return transition_wait()
@@ -25,6 +26,7 @@ func state_process(delta):
 func transition_ride():
 	var new_state = PassengerStateRiding.new()
 	new_state.passenger = passenger
+	passenger.entered_stairs.emit(passenger)
 	return new_state
 
 func transition_wait():
@@ -53,3 +55,6 @@ func _fix_destination():
 
 func name():
 	return "Walk"
+
+func animation():
+	return "walking"

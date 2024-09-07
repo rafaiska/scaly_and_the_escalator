@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://cs3xifn83xtmx"]
+
+[ext_resource type="Script" path="res://Scripts/passenger.gd" id="1_7lgls"]
+[ext_resource type="Texture2D" uid="uid://c2ai302xtwc7" path="res://Assets/shadow_m.png" id="2_pxbbg"]
+[ext_resource type="Texture2D" uid="uid://dkr0i8u0ilmxs" path="res://Assets/househusband_walk-Sheet.png" id="3_tqceo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2w5y"]
+atlas = ExtResource("3_tqceo")
+region = Rect2(96, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2yl1l"]
+atlas = ExtResource("3_tqceo")
+region = Rect2(0, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yy0i"]
+atlas = ExtResource("3_tqceo")
+region = Rect2(24, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svgro"]
+atlas = ExtResource("3_tqceo")
+region = Rect2(72, 0, 24, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eycst"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2w5y")
+}],
+"loop": true,
+"name": &"sliding",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yl1l")
+}],
+"loop": true,
+"name": &"standing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yl1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yy0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yl1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svgro")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2w5y")
+}],
+"loop": true,
+"name": &"woah",
+"speed": 5.0
+}]
+
+[node name="HouseHusband" type="PathFollow2D"]
+v_offset = -22.0
+rotates = false
+script = ExtResource("1_7lgls")
+weight = 1.5
+mood_decay_rate = 0.02
+walk_speed = 0.04
+passenger_type = "HouseHusband"
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(-1, 23)
+texture = ExtResource("2_pxbbg")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_eycst")
+animation = &"sliding"
+
+[node name="MoveDelay" type="Timer" parent="."]
+one_shot = true
+
+[node name="Moodlet" type="Sprite2D" parent="."]
+position = Vector2(0, -32)

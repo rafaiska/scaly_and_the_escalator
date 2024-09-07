@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp5dilkkvya5u"
-path="res://.godot/imported/mood_bar.png-4b5be7e9f9f7af64b0f4d81a88c163ff.ctex"
+uid="uid://c2ai302xtwc7"
+path="res://.godot/imported/shadow_m.png-3f66d983d6b836a1b21dd0c4c450cf95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/mood_bar.png"
-dest_files=["res://.godot/imported/mood_bar.png-4b5be7e9f9f7af64b0f4d81a88c163ff.ctex"]
+source_file="res://Assets/shadow_m.png"
+dest_files=["res://.godot/imported/shadow_m.png-3f66d983d6b836a1b21dd0c4c450cf95.ctex"]
 
 [params]
 

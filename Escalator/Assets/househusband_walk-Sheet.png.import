@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfqgbcmsfdfp0"
-path="res://.godot/imported/mood_bar_frame.png-8b52a7cbea330c8a95e7df9e9236900c.ctex"
+uid="uid://dkr0i8u0ilmxs"
+path="res://.godot/imported/househusband_walk-Sheet.png-e9ba4947c719394e32cc72409d5f157f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/mood_bar_frame.png"
-dest_files=["res://.godot/imported/mood_bar_frame.png-8b52a7cbea330c8a95e7df9e9236900c.ctex"]
+source_file="res://Assets/househusband_walk-Sheet.png"
+dest_files=["res://.godot/imported/househusband_walk-Sheet.png-e9ba4947c719394e32cc72409d5f157f.ctex"]
 
 [params]
 

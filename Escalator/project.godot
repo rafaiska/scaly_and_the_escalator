@@ -25,6 +25,10 @@ window/size/viewport_width=320
 window/size/viewport_height=180
 window/stretch/mode="viewport"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 throttle_up={

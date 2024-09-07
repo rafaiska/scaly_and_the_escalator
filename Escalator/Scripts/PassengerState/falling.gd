@@ -5,7 +5,7 @@ class_name PassengerStateFalling
 var _fall_speed : float = 0.0
 var _rotation_speed : float = 0.0
 
-const STOPPED_TOLERANCE = 0.05
+const STOPPED_TOLERANCE = 0.1
 const ROTATION_RATE = 50
 const GRAVITY = -1
 const FRICTION = 0.2
@@ -13,6 +13,13 @@ const FRICTION = 0.2
 func state_process(delta):
 	passenger._mood = 0
 	passenger._sprite.rotation -= _rotation_speed * delta
+	
+	if passenger.reached_destination() or passenger.reached_start():
+		Game.play_crash()
+		passenger.speed = 0
+		passenger._sprite.rotation = 0
+		return transition_end()
+	
 	if passenger.is_in_escalator():
 		_fall_speed += GRAVITY * delta
 		passenger.speed = Game.escalator_speed() + _fall_speed
@@ -33,7 +40,13 @@ func transition_ride():
 
 func transition_walk():
 	var new_state = PassengerStateWalking.new()
-	var destination = _get_destination()
+	new_state.can_walk(true)
+	new_state.destination = _get_destination()
+	new_state.passenger = passenger
+	return new_state
+
+func transition_end():
+	var new_state = PassengerStateEnd.new()
 	new_state.passenger = passenger
 	return new_state
 
@@ -48,3 +61,6 @@ func rotate(rspeed: float):
 
 func name():
 	return "Falling"
+
+func animation():
+	return "woah"

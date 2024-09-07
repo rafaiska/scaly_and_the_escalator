@@ -2,14 +2,20 @@ extends PassengerState
 
 class_name PassengerStateRiding
 
-func state_process(delta):
+var current_animation = "standing"
+
+func state_process(_delta):
 	_fix_position()
 	
-	var previous_speed = passenger.speed
 	passenger.speed = Game.escalator_speed()
 	
-	if _passenger_toppled(previous_speed, delta):
-		return transition_falling(previous_speed - passenger.speed)
+	if _passenger_toppled():
+		return transition_falling(passenger.speed)
+	
+	if abs(passenger.speed) > passenger.get_topple_speed() * 0.8:
+		current_animation = "woah"
+	else:
+		current_animation = "standing"
 	
 	if passenger.is_in_position(passenger.end_of_escalator()):
 		passenger.speed = 0
@@ -23,24 +29,29 @@ func transition_walk(destination):
 	new_state.passenger = passenger
 	new_state.destination = destination
 	new_state.can_walk(true)
+	passenger.exited_stairs.emit(passenger)
 	return new_state
 
 func transition_falling(rotation_speed):
 	var new_state = PassengerStateFalling.new()
 	new_state.passenger = passenger
 	new_state.rotate(rotation_speed)
+	passenger.exited_stairs.emit(passenger)
 	return new_state
 
 func _fix_position():
 	if passenger._direction == 1:
-		passenger.progress_ratio = max(Game.STAIRS_START, passenger.progress_ratio)
+		passenger.progress_ratio = max(Game._r_escalator_start.progress_ratio, passenger.progress_ratio)
 	elif passenger._direction == -1:
-		passenger.progress_ratio = min(Game.STAIRS_END, passenger.progress_ratio)
+		passenger.progress_ratio = min(Game._l_escalator_start.progress_ratio, passenger.progress_ratio)
 	else:
 		assert(false, 'Wrong direction')
 
-func _passenger_toppled(previous_speed, delta) -> bool:
-	return (abs(passenger.speed - previous_speed) / delta) > passenger.get_topple_accel()
+func _passenger_toppled() -> bool:
+	return abs(passenger.speed) > passenger.get_topple_speed()
 
 func name():
 	return "Riding"
+
+func animation():
+	return current_animation

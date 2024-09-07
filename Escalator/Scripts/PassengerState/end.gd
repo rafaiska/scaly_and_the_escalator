@@ -4,7 +4,7 @@ class_name PassengerStateEnd
 
 var notified : bool = false
 
-func state_process(delta):
+func state_process(_delta):
 	if !notified:
 		passenger.exited_map.emit(passenger)
 		notified = true
@@ -12,3 +12,6 @@ func state_process(delta):
 
 func name():
 	return "Ended"
+
+func animation():
+	return "standing"
